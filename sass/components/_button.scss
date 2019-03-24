@@ -1,0 +1,139 @@
+.btn{
+
+    /*
+    以下は<a>タグの装飾
+    .btn:link と .btn:visitedがデフォルトのままだと、
+    リンクは最初に青く表示されて、クリック後は紫色で表示されるので変更する。
+    */
+    &,              // button（.btn）を追加するため
+    &:link,
+    &:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block;
+        font-size: $default-font-size;
+        
+        border-radius: 10rem;
+        /* 一定以上の大きな値を設定すれば角が完全に丸くなる */
+
+        transition: all 0.2s;
+        /* transitionは初期状態を表すpseudo classに設定する
+        　  たとえそれが hover状態の変化だと思えても */
+
+        position: relative;
+
+        // change for the <button> element
+        border: none;
+        cursor: pointer;
+    }
+
+    &:hover{
+        transform: translateY(-0.3rem);
+        /* 上に動かしたい場合は負の値を入れる */
+
+        box-shadow: 0 1rem 2rem rgba($color-black,0.2);
+        /* x方向の影の伸び y方向の影の伸び ぼかし 色（4つ目の引数は透過度）*/
+
+        /* 元要素の真後ろにあった同じプロパティをもつ疑似要素が、
+        　ホバー時に大きくなりつつ透過していくようなアニメーションを作成する */
+        &::after{
+
+            /*以下の要素が 0.4秒 かけて適用される */
+
+            transform: scaleX(1.4) scaleY(1.6);
+            /* 要素の大きさをX倍する */
+            opacity: 0;
+            /* 完全に透明となる */
+        }
+    }
+
+    /* ボタンを押したときに少し沈むようなアニメーションを作成する */
+    &:active,
+    &:focus{
+        outline: none;
+        transform: translateY(-0.1rem);
+        box-shadow: 0 .5rem 1rem rgba($color-black,0.2);
+    }
+
+
+    /* .btn の中でも、.btn-whiteにのみ適用する */
+    &--white {
+        background-color: $color-white;
+        color: $color-grey-dark;
+
+        &:after{
+            background-color: $color-white;
+        }
+    }
+
+    &--green {
+        background-color: $color-primary-light;
+        color: $color-white;
+
+        &:after{
+            background-color: $color-primary-light;
+        }
+    }
+
+
+    /* :after は、選択した要素の最後の子要素として擬似要素を作成する */
+    &:after {
+
+        content: "";    /* contentプロパティは必須 */
+
+        /* 後は元要素のプロパティと同じになるように */
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+
+        /* 元要素の真後ろに設置する */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        
+        /* :hover の transitionを設定 */
+        transition: all .4s;
+    }
+
+
+
+    /* 最初のフェードインアニメーション */
+    &--animated{
+        animation: moveInBottom 0.5s ease-out;
+        animation-delay: .75s;
+
+        animation-fill-mode: backwards;
+        /* animation の 0% にあたるCSSが、
+        　　アニメーションが始まる前から適用されるようになる。
+        　　これによりアニメーションが始まる前の要素がopacity=0に */
+    }
+
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: $default-font-size;
+        color:  $color-primary;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid $color-primary;
+        padding: 3px;
+        transition: all .2s;
+    }
+
+    &:hover{
+        background-color: $color-primary;
+        color: $color-white;
+        box-shadow: 0 1rem 2rem rgba($color-black, .15);
+        transform: translateY(-2px);
+    }
+
+    &:active{
+        box-shadow: 0 .5rem 1rem rgba($color-black, .15);
+        transform: translateY(0);
+    }
+}

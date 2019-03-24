@@ -1,0 +1,57 @@
+@mixin clearfix{
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+
+// MEDIA QUERY MANAGER
+/*
+  0  -  600px:  Phone
+600  -  900px:  Tablet Portrait
+900  - 1200px:  Tablet Landscape
+1200 - 1800px:  Normal system
+1800 -       :  Big deskTop
+
+レスポンシブ実装の流れ
+base => typography => layout/grid => page => components
+
+$breakpoint argument choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+*/
+// media query のremはrootのfont-sizeの影響を受けない
+// つまりブラウザから提供されるフォントサイズが適用されて、1em=16px
+// ※ media queryではremではなくemを使う
+// only screen ⇒ screenのみにmedia queryを適用する。
+// ⇒ 例えば印刷時にはmediaqueryを適用しない
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em) { @content }; // 600px
+    }
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 56.25em) { @content };  // 900px
+    }
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 75em) { @content }; // 1200px
+    }
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content };  // 1800px min-widthであることに注意
+    }
+
+
+}
+

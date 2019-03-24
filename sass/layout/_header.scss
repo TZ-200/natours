@@ -1,0 +1,70 @@
+.header{
+    height: 85vh;
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light,0.8),
+        rgba($color-primary-dark,0.8)),
+        url(../img/hero-small.jpg);
+    /*この場合、z-indexはlinear-gradientの方が高い*/
+    
+    background-size: cover; 
+    /*画像の全体を表示する。表示しきれない場合に
+    　画像が縮小することはない。*/
+
+    background-position: top;
+    /* viewportのサイズを変化しても、常に画像の
+    　 上部は変化が無いようにする。他にもcenterやbottomがある。*/
+
+    position: relative;
+
+    @supports (clip-path: polygon(0 0)) or (-weblit-clip-path: polygon(0 0)){
+        height: 95vh;        
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        /* 要素の左上隅を始点として、切り出したい領域を点で指定する。
+        　 色々な図形に切り出すことができる。 */
+    }
+
+    // 192 dpi => appleのresolution, 基準
+    // -webkit-... はsafari用
+    @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+            only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+            only screen and (min-width: 115em) {
+        background-image: linear-gradient(
+            to right bottom,
+            rgba($color-primary-light,0.8),
+            rgba($color-primary-dark,0.8)),
+            url(../img/hero.jpg);
+    }
+
+    @include respond(phone){
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    }
+
+    &__logo-box{
+        position: absolute; 
+        /* position:relative; が適用された親要素をreferenceにする*/
+        top: 4rem;
+        left: 4rem;
+    }
+
+    &__logo{
+        height: 3.5rem;
+        /* <img>には直接 heightプロパティを設定できる */
+    }
+
+    &__text-box {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        /* 親要素の左上隅からの相対位置。
+        　 コンテンツの大きさの分真ん中には揃わない*/
+
+        transform: translate(-50%, -50%);
+        /* コンテンツの幅と高さの半分ずつ左上にシフトする
+        　 こうすることで真ん中に揃う */
+
+        text-align: center;
+    }
+}

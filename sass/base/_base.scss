@@ -1,0 +1,50 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+// ghost CSSのバグ取り用
+// * {
+//     background: #000 !important;
+//     color: #0f0 !important;
+//     outline: solid rgb(255, 255, 255) 1px !important;
+//   }
+
+html {
+    
+    // This defines what 1rem is
+    // つまりsettingなのでtypographyではない
+    font-size: 62.5%;   // 1rem = 10px
+
+    //  以下の順番に注意(conflictが発生したら最後のmedia queryが適用される)
+    //  例えばwidth=700pxの場合、下のどちらも適用されて、後者が残る
+    @include respond(tab-land){     // width < 1200px
+        font-size: 56.25%;   // 1rem = 9px
+    }
+    @include respond(tab-port){     // width < 900px
+        font-size: 50%;   // 1rem = 8px
+    }
+    // @include respond(phone){  phoneの場合もtab-portのmedia queryを適用させる
+    //     font-size: 50%;      
+    // }
+    @include respond(big-desktop){  // width > 1800px
+        font-size: 75%;     // 1rem = 12px
+    }
+}
+
+body{
+    box-sizing: border-box;
+    padding: 3rem;      /* paddingは継承されない */
+    @include respond(tab-port){
+        padding: 0;  
+    }
+
+}
+
+::selection{
+    background-color: $color-primary;
+    color: $color-white;
+}
