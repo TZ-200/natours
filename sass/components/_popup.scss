@@ -7,7 +7,7 @@
     left: 0;
     background-color: rgba($color-black, .8);
     z-index: 9999;
-
+    display: none;
     // display:none;ではなく以下を使うことでアニメーションが適用できる
     opacity: 0;
     visibility: hidden;
